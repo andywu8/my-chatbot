@@ -42,7 +42,6 @@ query_llm = LLMChain(llm=llm, prompt=prompt)
 # loader = TextLoader("about_me.txt")
 # index = VectorstoreIndexCreator().from_loaders([loader])
 
-response = query_llm.run({"context": context, "question": question})
 # print("response", response)
 # 
 # print(index.query("Tell me about your school"))
@@ -50,20 +49,11 @@ response = query_llm.run({"context": context, "question": question})
 # response = index.query(prompt)
 if st.button('Generate'):
     if question:
-        st.write(response)
-        # this_prompt = "tell me about"
-        # print("response", response)
-        # response = query_llm.run({"context": context, "question": question})
-        # st.write(response)
-#         st.write(response)
-        # index.query(prompt)
-        # st.write(index.query(prompt))
-        # with st.spinner('Generating response...'):
-            # index.query(prompt)
-            # print("response", response)
-            # st.write(response)
-    # else:
-    #     st.warning('Please enter your prompt')
+        with st.spinner('Generating response...'):
+            response = query_llm.run({"context": context, "question": question})
+            st.write(response)
+    else:
+        st.warning('Please enter your prompt')
 
 
 
