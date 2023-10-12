@@ -3,10 +3,12 @@ from langchain.document_loaders import TextLoader
 from langchain.llms import OpenAI
 from langchain.vectorstores import Chroma
 from langchain.indexes import VectorstoreIndexCreator
+from langchain.text_splitter import CharacterTextSplitter
 import os 
 import constants
 from dotenv import load_dotenv
 load_dotenv()
+
 
 os.environ['OPENAI_API_KEY'] = constants.OPENAI_API_KEY
 

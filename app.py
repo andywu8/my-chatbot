@@ -17,10 +17,7 @@ os.environ['OPENAI_API_KEY'] = constants.OPENAI_API_KEY
 st.title("Andy's Chatbot")
 question = st.text_input("Ask me anything:")
 
-file_path = "about_me.txt"
-loader = TextLoader(file_path)
-docs = loader.load()
-text_splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=0)
+
 
 prompt_template = """
 Use the following pieces of context to answer the question at the end.
@@ -31,22 +28,18 @@ prompt = PromptTemplate(template=prompt_template, input_variables=["context", "q
 
 llm = OpenAI()
 embeddings = OpenAIEmbeddings()
+file_path = "about_me.txt"
+loader = TextLoader(file_path)
+docs = loader.load()
+text_splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=0)
 texts = text_splitter.split_documents(docs)
 db = Chroma.from_documents(texts, embeddings)
 
-# question = "What is your name?"
 similar_doc = db.similarity_search(question, k=1)
 context = similar_doc[0].page_content
 query_llm = LLMChain(llm=llm, prompt=prompt)
 
-# loader = TextLoader("about_me.txt")
-# index = VectorstoreIndexCreator().from_loaders([loader])
 
-# print("response", response)
-# 
-# print(index.query("Tell me about your school"))
-
-# response = index.query(prompt)
 if st.button('Generate'):
     if question:
         with st.spinner('Generating response...'):
