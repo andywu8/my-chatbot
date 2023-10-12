@@ -1,10 +1,6 @@
 streamlit
-typing-extensions
 langchain
 openai
-pydantic
-python-dotenv
 watchdog
-wikipedia
 chromadb
 tiktoken
